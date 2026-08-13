@@ -108,8 +108,8 @@ a { color: inherit; }
 }
 
 .nav__mark {
-  width: 26px;
-  height: 26px;
+  width: 34px;
+  height: 34px;
   color: var(--indigo-lift);
   flex: none;
 }
@@ -227,7 +227,9 @@ a { color: inherit; }
 }
 
 .hero__mark {
-  width: clamp(104px, 14vw, 164px);
+  /* The mark is the first thing on the page and it is the product's own icon, so it is sized
+     to be read as a logo rather than as a bullet above the headline. */
+  width: clamp(148px, 20vw, 248px);
   height: auto;
   margin-inline: auto;
   color: var(--paper);
