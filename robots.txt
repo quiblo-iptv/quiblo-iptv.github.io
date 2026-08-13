@@ -1,0 +1,18 @@
+# Quiblo — a free, open source IPTV player.
+# Licensed under the GNU General Public License v3.0 or later.
+
+# This file governs the whole host, both sites on it.
+#
+# A crawler reads robots.txt from the origin root and nowhere else, so the copy the wiki
+# writes into /quiblo-wiki/robots.txt has never been read by anything — its sitemap line was
+# invisible for as long as that was the only one. The root only became ours when the landing
+# page was published, and this is the first robots.txt on this host that a crawler will
+# actually fetch.
+#
+# Both sitemaps are declared here for that reason. Keep them both.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://quiblo-iptv.github.io/sitemap.xml
+Sitemap: https://quiblo-iptv.github.io/quiblo-wiki/sitemap.xml

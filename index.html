@@ -29,8 +29,20 @@
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/styles.css">
 
+<!--
+  The canonical description of what Quiblo is, and who publishes it.
+
+  This lives here rather than on the wiki because this is the root of the host: a brand query
+  resolves against a site's front door, and an Organization declared three levels down is one
+  a crawler has to find first. The wiki carries its own graph for its own pages and points
+  back here.
+-->
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Quiblo","description":"A free, open source IPTV player for Android phones and Android TV. Bring your own M3U or Xtream playlist.","applicationCategory":"MultimediaApplication","operatingSystem":"Android 11+, Android TV, Google TV","url":"https://quiblo-iptv.github.io/","downloadUrl":"https://github.com/quiblo-iptv/quiblo-app/releases/latest","codeRepository":"https://github.com/quiblo-iptv/quiblo-app","license":"https://www.gnu.org/licenses/gpl-3.0.html","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+{"@context":"https://schema.org","@graph":[
+{"@type":"SoftwareApplication","@id":"https://quiblo-iptv.github.io/#software","name":"Quiblo","alternateName":"Quiblo IPTV Player","description":"A free, open source IPTV player for Android phones and Android TV. Bring your own M3U or Xtream playlist — no ads, no accounts, no tracking.","applicationCategory":"MultimediaApplication","applicationSubCategory":"IPTV player","operatingSystem":"Android 11+, Android TV, Google TV","url":"https://quiblo-iptv.github.io/","downloadUrl":"https://github.com/quiblo-iptv/quiblo-app/releases/latest","installUrl":"https://github.com/quiblo-iptv/quiblo-app/releases/latest","codeRepository":"https://github.com/quiblo-iptv/quiblo-app","programmingLanguage":"Kotlin","license":"https://www.gnu.org/licenses/gpl-3.0.html","image":"https://quiblo-iptv.github.io/assets/og-image.png","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD","availability":"https://schema.org/InStock"},"featureList":["M3U and M3U8 playlists, by URL or local file","Xtream Codes accounts","Live TV, films and series with seasons and episodes","Programme guide with now, next and a full timeline","Subtitles and multiple audio tracks","Android TV and Google TV, driven by a remote","No ads, no accounts, no tracking and no backend"],"publisher":{"@id":"https://quiblo-iptv.github.io/#organization"}},
+{"@type":"Organization","@id":"https://quiblo-iptv.github.io/#organization","name":"Quiblo","url":"https://quiblo-iptv.github.io/","logo":"https://quiblo-iptv.github.io/assets/quiblo-icon-512.png","description":"A free, open source IPTV player for Android phones and Android TV.","sameAs":["https://github.com/quiblo-iptv","https://github.com/quiblo-iptv/quiblo-app","https://www.patreon.com/c/Quiblo"]},
+{"@type":"WebSite","@id":"https://quiblo-iptv.github.io/#website","name":"Quiblo","url":"https://quiblo-iptv.github.io/","inLanguage":"en","publisher":{"@id":"https://quiblo-iptv.github.io/#organization"},"about":{"@id":"https://quiblo-iptv.github.io/#software"},"hasPart":{"@type":"WebSite","name":"Quiblo wiki","url":"https://quiblo-iptv.github.io/quiblo-wiki/"}}
+]}
 </script>
 </head>
 <body>

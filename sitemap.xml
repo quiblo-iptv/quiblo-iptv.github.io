@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  The landing page is one page, so this is one entry.
+
+  It exists anyway, because a sitemap is how a brand-new host tells a crawler it is there at
+  all rather than waiting to be found by a link from somewhere with authority. The wiki keeps
+  its own, generated from its content; both are declared in /robots.txt.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://quiblo-iptv.github.io/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>
