@@ -1,0 +1,541 @@
+/*
+ * Quiblo — the landing page.
+ *
+ * Two decisions run through everything here.
+ *
+ * **Indigo is the ground, not the accent.** The app's own icon is white on a full plate of
+ * #4A4FBF, so the site is built out of that plate rather than out of black with indigo
+ * highlights on it. Even the muted text is indigo-tinted; there is no neutral grey anywhere,
+ * which is what stops the page reading as a generic dark theme with a brand colour dropped in.
+ *
+ * **One typeface, two widths, and the width means something.** Archivo is a variable font with
+ * a width axis. Headlines are set expanded — the shape of a widescreen picture — and body text
+ * is set normal. It is the same family throughout, so the only thing separating a heading from
+ * a paragraph is how wide the letters are, which is a joke the product is allowed to make.
+ */
+
+:root {
+  /* The plate, and the shades either side of it. */
+  --void: #06060e;
+  --ink: #0d0d1d;
+  --indigo-deep: #1d2059;
+  --indigo: #4a4fbf;
+  --indigo-lift: #7a7fea;
+
+  --paper: #f4f4fa;
+  /* Indigo-tinted rather than grey. Nothing on this page is neutral. */
+  --mute: #a3a6d2;
+  --line: rgb(122 127 234 / 18%);
+
+  /* The one warm note on the page, and it is spent entirely on the refusal. */
+  --warn: #ffb86b;
+
+  --measure: 62ch;
+  --gutter: clamp(1.25rem, 5vw, 4rem);
+  --rhythm: clamp(4.5rem, 10vw, 9rem);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  margin: 0;
+  background: var(--void);
+  color: var(--paper);
+  font-family: Archivo, system-ui, sans-serif;
+  font-variation-settings: 'wdth' 100;
+  font-size: clamp(1rem, 0.96rem + 0.2vw, 1.075rem);
+  line-height: 1.62;
+  -webkit-font-smoothing: antialiased;
+}
+
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; }
+
+.skip {
+  position: absolute;
+  left: -9999px;
+}
+.skip:focus {
+  left: 1rem;
+  top: 1rem;
+  z-index: 99;
+  padding: 0.6rem 1rem;
+  background: var(--paper);
+  color: var(--void);
+  border-radius: 6px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--indigo-lift);
+  outline-offset: 3px;
+}
+
+/* --- shell --------------------------------------------------------------- */
+
+.wrap {
+  width: min(1180px, 100%);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.wrap--narrow { width: min(760px, 100%); }
+
+/* --- navigation ---------------------------------------------------------- */
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.85rem var(--gutter);
+  background: rgb(6 6 14 / 72%);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+
+.nav__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+
+.nav__mark {
+  width: 26px;
+  height: 26px;
+  color: var(--indigo-lift);
+  flex: none;
+}
+
+.nav__links {
+  display: flex;
+  gap: 1.4rem;
+  margin-inline-start: auto;
+  font-size: 0.9rem;
+  color: var(--mute);
+}
+.nav__links a {
+  text-decoration: none;
+  padding-block: 0.2rem;
+  border-bottom: 1px solid transparent;
+  transition: color 0.18s ease, border-color 0.18s ease;
+}
+.nav__links a:hover { color: var(--paper); border-bottom-color: var(--indigo-lift); }
+
+@media (max-width: 1080px) {
+  .nav__links { display: none; }
+  .nav__brand { margin-inline-end: auto; }
+}
+
+/* --- buttons ------------------------------------------------------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.9rem;
+  padding: 0.6rem 1.35rem;
+  font: inherit;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--paper);
+  text-decoration: none;
+  background: rgb(122 127 234 / 8%);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+}
+.btn:hover {
+  background: rgb(122 127 234 / 16%);
+  border-color: var(--indigo-lift);
+  transform: translateY(-1px);
+}
+
+.btn--primary {
+  color: #fff;
+  background: var(--indigo);
+  border-color: var(--indigo);
+}
+.btn--primary:hover { background: var(--indigo-lift); border-color: var(--indigo-lift); }
+
+.btn--small { min-height: 2.4rem; padding: 0.4rem 1rem; font-size: 0.88rem; flex: none; }
+
+/* --- the hero ------------------------------------------------------------ */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(4rem, 11vh, 8rem) var(--rhythm);
+  background:
+    radial-gradient(120% 90% at 50% -10%, var(--indigo-deep) 0%, transparent 62%),
+    var(--void);
+}
+
+/*
+ * The channel grid.
+ *
+ * Every cell is 16:9 — the shape of the thing being played — and they begin as empty outlines
+ * and fill in, over and over. That is the product: it arrives with nothing in it and a viewer
+ * supplies the catalogue. It is the only ambient animation on the page and it is allowed
+ * because it is the argument rather than an ornament. Cells are written by main.js.
+ */
+.grid {
+  position: absolute;
+  inset: -6% -2% auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
+  gap: 10px;
+  pointer-events: none;
+}
+
+.cell {
+  aspect-ratio: 16 / 9;
+  border: 1px solid rgb(122 127 234 / 16%);
+  border-radius: 5px;
+  background: transparent;
+  transition: background 900ms ease, border-color 900ms ease;
+}
+.cell.is-on {
+  background: rgb(74 79 191 / 42%);
+  border-color: rgb(122 127 234 / 42%);
+}
+
+/* Keeps the type readable over the grid without dimming the whole picture. */
+.hero__veil {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(70% 55% at 50% 46%, var(--void) 30%, rgb(6 6 14 / 72%) 58%, transparent 100%),
+    linear-gradient(to bottom, transparent 55%, var(--void) 96%);
+}
+
+.hero__inner {
+  position: relative;
+  z-index: 1;
+  width: min(1180px, 100%);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+  text-align: center;
+}
+
+.hero__mark {
+  width: clamp(104px, 14vw, 164px);
+  height: auto;
+  margin-inline: auto;
+  color: var(--paper);
+  /* The stroke is authored at a 108-unit scale, so it thins as the mark grows. Nudged back so
+     the ring keeps the weight it has in the launcher icon. */
+  stroke-width: 0;
+}
+.hero__mark .hero__ring,
+.hero__mark .hero__tail {
+  stroke-width: 5.5;
+}
+
+/* The mark draws itself once, on load. See main.js for the reduced-motion path. */
+.hero__ring { stroke-dasharray: 114; stroke-dashoffset: 114; }
+.hero__tail { stroke-dasharray: 15; stroke-dashoffset: 15; }
+.hero__play { opacity: 0; transform-origin: 55px 54px; transform: scale(0.6); }
+
+.is-drawn .hero__ring { animation: draw 900ms cubic-bezier(0.65, 0, 0.35, 1) forwards; }
+.is-drawn .hero__tail { animation: draw 320ms cubic-bezier(0.65, 0, 0.35, 1) 780ms forwards; }
+.is-drawn .hero__play { animation: pop 420ms cubic-bezier(0.34, 1.4, 0.64, 1) 620ms forwards; }
+
+@keyframes draw { to { stroke-dashoffset: 0; } }
+@keyframes pop { to { opacity: 1; transform: scale(1); } }
+
+.eyebrow {
+  margin: 2rem 0 0;
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+.eyebrow--warn { color: var(--warn); }
+
+/*
+ * Headlines are set expanded, body text is not. One family, two widths — and the wide one is
+ * reserved for the largest type, because the product is about a widescreen picture.
+ */
+.hero__title {
+  margin: 0.9rem 0 0;
+  font-variation-settings: 'wdth' 118;
+  font-weight: 800;
+  font-size: clamp(2.5rem, 1.2rem + 5.6vw, 5.4rem);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+}
+.hero__title em {
+  display: inline-block;
+  font-style: normal;
+  color: var(--indigo-lift);
+}
+
+.hero__lede {
+  max-width: var(--measure);
+  margin: 1.5rem auto 0;
+  color: var(--mute);
+  font-size: 1.08rem;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-top: 2.1rem;
+}
+
+/* --- the four facts ------------------------------------------------------ */
+
+/*
+ * A definition list, not a stat row. These are answers to questions people actually ask
+ * before installing something, and the last one is the joke that carries the whole position.
+ */
+.facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1px;
+  max-width: 860px;
+  margin: 3.5rem auto 0;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.facts__item {
+  padding: 1.1rem 1rem;
+  background: var(--void);
+}
+.facts dt {
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+.facts dd {
+  margin: 0.4rem 0 0;
+  font-variation-settings: 'wdth' 112;
+  font-weight: 700;
+  font-size: 1.02rem;
+}
+
+/* --- bands --------------------------------------------------------------- */
+
+.band { padding-block: var(--rhythm); }
+.band--alt { background: var(--ink); }
+
+.h2 {
+  margin: 0.7rem 0 0;
+  font-variation-settings: 'wdth' 115;
+  font-weight: 800;
+  font-size: clamp(1.9rem, 1.2rem + 2.4vw, 3.1rem);
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+}
+
+.lede {
+  max-width: var(--measure);
+  margin: 1.3rem 0 0;
+  color: var(--mute);
+  font-size: 1.06rem;
+}
+
+/* --- format chips -------------------------------------------------------- */
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin: 2rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.chips li {
+  padding: 0.36rem 0.8rem;
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  font-size: 0.8rem;
+  color: var(--mute);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+}
+
+/* --- three columns ------------------------------------------------------- */
+
+.cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2rem 2.5rem;
+  margin-top: 3.2rem;
+}
+.col h3 {
+  margin: 0 0 0.5rem;
+  font-variation-settings: 'wdth' 108;
+  font-size: 1.12rem;
+  font-weight: 700;
+}
+.col p { margin: 0; color: var(--mute); }
+
+/* --- the two apps -------------------------------------------------------- */
+
+.split {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+  margin-top: 3rem;
+}
+
+.panel {
+  padding: 1.9rem 1.7rem;
+  background: var(--void);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+/* The television build gets the plate, because that is the screen it lives on. */
+.panel--tv {
+  background: linear-gradient(160deg, var(--indigo-deep), var(--void) 78%);
+  border-color: rgb(122 127 234 / 34%);
+}
+
+.panel__tag {
+  margin: 0;
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+.panel h3 {
+  margin: 0.5rem 0 1.1rem;
+  font-variation-settings: 'wdth' 112;
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.panel ul { margin: 0; padding-inline-start: 1.1rem; color: var(--mute); }
+.panel li { margin-block: 0.45rem; }
+
+/* --- the boundary -------------------------------------------------------- */
+
+/*
+ * The page's one inversion. Everywhere else is the product; this is its edge, so it is the one
+ * section that drops the plate and sits on the deepest ground with a warm rule across the top.
+ */
+.boundary {
+  padding-block: var(--rhythm);
+  background: var(--void);
+  border-block: 1px solid rgb(255 184 107 / 26%);
+}
+.boundary__title {
+  margin: 0.7rem 0 0;
+  font-variation-settings: 'wdth' 120;
+  font-weight: 900;
+  font-size: clamp(2rem, 1.1rem + 3.6vw, 4rem);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+}
+.boundary__body {
+  max-width: var(--measure);
+  margin: 1.4rem 0 0;
+  font-size: 1.08rem;
+  color: var(--paper);
+}
+.boundary__note {
+  max-width: var(--measure);
+  margin: 1.8rem 0 0;
+  padding-inline-start: 1rem;
+  border-inline-start: 2px solid var(--warn);
+  color: var(--mute);
+}
+
+/* --- the ledger ---------------------------------------------------------- */
+
+/*
+ * Not numbered. These are four independent faults, not a sequence, and numbering them would
+ * imply an order that does not exist. The label is the subject of each one instead.
+ */
+.ledger {
+  margin: 2.6rem 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+.ledger li {
+  display: grid;
+  grid-template-columns: minmax(150px, 220px) 1fr;
+  gap: 0.5rem 2rem;
+  padding-block: 1.35rem;
+  border-bottom: 1px solid var(--line);
+}
+.ledger__n {
+  font-variation-settings: 'wdth' 112;
+  font-weight: 700;
+  color: var(--indigo-lift);
+}
+.ledger__t { color: var(--mute); }
+
+@media (max-width: 640px) {
+  .ledger li { grid-template-columns: 1fr; }
+}
+
+.pull {
+  max-width: 26ch;
+  margin: 3rem 0;
+  padding: 0;
+  font-variation-settings: 'wdth' 116;
+  font-weight: 700;
+  font-size: clamp(1.4rem, 1rem + 1.8vw, 2.3rem);
+  line-height: 1.16;
+  letter-spacing: -0.025em;
+  color: var(--paper);
+}
+
+/* --- footer -------------------------------------------------------------- */
+
+.foot {
+  padding-block: 3.5rem;
+  background: var(--ink);
+  border-top: 1px solid var(--line);
+}
+.foot__inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  align-items: start;
+  justify-content: space-between;
+}
+.foot__brand { display: flex; gap: 0.8rem; align-items: start; }
+.foot__brand p { margin: 0; color: var(--mute); font-size: 0.9rem; }
+.foot__links { display: grid; gap: 0.5rem; font-size: 0.92rem; }
+.foot__links a { color: var(--mute); text-decoration: none; }
+.foot__links a:hover { color: var(--paper); }
+
+/* --- scroll reveal ------------------------------------------------------- */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 640ms ease, transform 640ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.is-in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .cell { transition: none; }
+  .is-drawn .hero__ring,
+  .is-drawn .hero__tail,
+  .is-drawn .hero__play { animation: none; }
+  .hero__ring, .hero__tail { stroke-dashoffset: 0; }
+  .hero__play { opacity: 1; transform: none; }
+  .btn:hover { transform: none; }
+}
