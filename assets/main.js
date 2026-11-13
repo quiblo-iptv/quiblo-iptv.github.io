@@ -126,6 +126,6 @@ function reveal() {
 channelGrid();
 reveal();
 
-// The mark draws itself once. Added as a class rather than run from here so the whole sequence
+// The screen in the mark switches on once. Added as a class rather than run from here so the whole sequence
 // stays in the stylesheet next to the shapes it moves.
 document.documentElement.classList.add('is-drawn');
